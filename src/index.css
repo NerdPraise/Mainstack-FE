@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/DegularDemo-Light.woff2') format('woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/DegularDemo-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/DegularDemo-Medium.woff2') format('woff2');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/DegularDemo-Semibold.woff2') format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Degular';
+  src: url('/fonts/DegularDemo-Bold.woff2') format('woff2');
+  font-weight: 700;
+}
+
+* {
+  font-family: Degular, sans-serif;
+}

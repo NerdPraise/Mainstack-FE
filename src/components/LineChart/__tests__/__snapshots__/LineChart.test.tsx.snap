@@ -1,0 +1,120 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LineChart > renders with default props 1`] = `
+<div>
+  <div
+    class="recharts-responsive-container"
+    style="width: 500px; height: 300px; min-width: 0;"
+  >
+    <div
+      class="recharts-wrapper"
+      style="position: relative; cursor: default; width: 100%; height: 100%; max-height: 300px; max-width: 500px;"
+    >
+      <svg
+        class="recharts-surface"
+        height="300"
+        style="width: 100%; height: 100%;"
+        viewBox="0 0 500 300"
+        width="500"
+      >
+        <title />
+        <desc />
+        <defs>
+          <clippath
+            id="recharts1-clip"
+          >
+            <rect
+              height="260"
+              width="490"
+              x="5"
+              y="5"
+            />
+          </clippath>
+        </defs>
+        <g
+          class="recharts-layer recharts-line"
+        >
+          <path
+            class="recharts-curve recharts-line-curve"
+            d="M5,5C59.44444444444445,5,113.88888888888889,5,168.33333333333334,5C222.7777777777778,5,277.22222222222223,5,331.6666666666667,5C386.11111111111114,5,440.55555555555554,5,495,5"
+            fill="none"
+            height="260"
+            stroke="#FF5403"
+            stroke-dasharray="0px 0px"
+            stroke-width="1"
+            width="490"
+          />
+        </g>
+        <g
+          class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"
+        >
+          <line
+            class="recharts-cartesian-axis-line"
+            fill="none"
+            height="30"
+            orientation="bottom"
+            stroke="#DBDEE5"
+            width="490"
+            x="5"
+            x1="5"
+            x2="495"
+            y="265"
+            y1="265"
+            y2="265"
+          />
+          <g
+            class="recharts-cartesian-axis-ticks"
+          >
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <text
+                class="recharts-xAxis xAxis"
+                fill="#5E6C84"
+                font-size="14"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="start"
+                verticalAnchor="start"
+                visibleTicksCount="4"
+                width="490"
+                x="5"
+                y="285"
+              >
+                400
+              </text>
+            </g>
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            />
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            />
+            <g
+              class="recharts-layer recharts-cartesian-axis-tick"
+            >
+              <text
+                class="recharts-xAxis xAxis"
+                fill="#5E6C84"
+                font-size="14"
+                height="30"
+                orientation="bottom"
+                stroke="none"
+                text-anchor="end"
+                verticalAnchor="start"
+                visibleTicksCount="4"
+                width="490"
+                x="495"
+                y="285"
+              >
+                800
+              </text>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+`;
