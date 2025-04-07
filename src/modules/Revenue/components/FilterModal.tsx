@@ -14,9 +14,13 @@ interface FilterModalProps {
   handleTransactionStatusChange: (e: string[]) => void
   handleStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  startDate: string
-  endDate: string
-  selectedFilter: string | null
+  filterState: {
+    transactionTypes: string[]
+    transactionStatus: string[]
+    startDate: string
+    endDate: string
+    selectedFilter: string | null
+  }
 }
 
 const filters = [
@@ -79,9 +83,7 @@ const FilterModal = ({
   handleTransactionStatusChange,
   handleStartDateChange,
   handleEndDateChange,
-  startDate,
-  endDate,
-  selectedFilter,
+  filterState,
 }: FilterModalProps) => {
   return (
     <>
@@ -118,7 +120,7 @@ const FilterModal = ({
                 key={item.name}
                 className={cn(
                   'text-[14px] duration-300 font-semibold hover:bg-[#EFF1F6] flex items-center justify-center px-4 py-1 border border-[#EFF1F6] cursor-pointer rounded-full',
-                  selectedFilter === item.value && 'bg-[#EFF1F6]'
+                  filterState.selectedFilter === item.value && 'bg-[#EFF1F6]'
                 )}
                 onClick={() => handleFilterClick(item.value)}
               >
@@ -132,14 +134,16 @@ const FilterModal = ({
             <div className="flex gap-x-3 mt-2">
               <input
                 type="date"
-                className="border border-[#EFF1F6] rounded-full px-4 py-2 w-full"
-                value={startDate}
+                className="border border-[#EFF1F6] rounded-xl h-[48px] bg-[#EFF1F6] px-4 py-2 w-full"
+                value={filterState.startDate}
+                placeholder="Start Date"
                 onChange={handleStartDateChange}
               />
               <input
                 type="date"
-                className="border border-[#EFF1F6] rounded-full px-4 py-2 w-full"
-                value={endDate}
+                className="border border-[#EFF1F6] rounded-xl h-[48px] bg-[#EFF1F6] px-4 py-2 w-full"
+                value={filterState.endDate}
+                placeholder="End Date"
                 onChange={handleEndDateChange}
               />
             </div>

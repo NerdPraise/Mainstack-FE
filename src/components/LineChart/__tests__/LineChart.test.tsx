@@ -12,7 +12,7 @@ const data = [
 ]
 
 beforeEach(() => {
-  delete window?.ResizeObserver
+  delete (window as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver
   window.ResizeObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
     unobserve: vi.fn(),

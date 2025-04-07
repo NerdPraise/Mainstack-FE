@@ -33,7 +33,8 @@ export const getObject = async (
 
 export const prepareFilterTransactions = (
   transactions: ITransaction[],
-  filter?: string | null
+  startDate?: string,
+  endDate?: string
 ) => {
   if (!transactions || transactions.length === 0) {
     return []
@@ -44,45 +45,15 @@ export const prepareFilterTransactions = (
   )
   let filteredTransactions = sortedTransactions
 
-  if (filter) {
-    const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  if (startDate && endDate) {
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    end.setHours(23, 59, 59, 999)
 
-    switch (filter) {
-      case 'today': {
-        filteredTransactions = sortedTransactions.filter(
-          (tx) => new Date(tx.date) >= today
-        )
-        break
-      }
-      case 'seven': {
-        const sevenDaysAgo = new Date(today)
-        sevenDaysAgo.setDate(today.getDate() - 7)
-        filteredTransactions = sortedTransactions.filter(
-          (tx) => new Date(tx.date) >= sevenDaysAgo
-        )
-        break
-      }
-      case 'month': {
-        const firstDayOfMonth = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          1
-        )
-        filteredTransactions = sortedTransactions.filter(
-          (tx) => new Date(tx.date) >= firstDayOfMonth
-        )
-        break
-      }
-      case 'last 3 months': {
-        const threeMonthsAgo = new Date(today)
-        threeMonthsAgo.setMonth(today.getMonth() - 3)
-        filteredTransactions = sortedTransactions.filter(
-          (tx) => new Date(tx.date) >= threeMonthsAgo
-        )
-        break
-      }
-    }
+    filteredTransactions = sortedTransactions.filter((tx) => {
+      const txDate = new Date(tx.date)
+      return txDate >= start && txDate <= end
+    })
   }
   return filteredTransactions
 }

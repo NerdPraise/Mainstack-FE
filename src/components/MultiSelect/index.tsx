@@ -46,7 +46,7 @@ const MultiSelect = ({ values, placeholder, onChange }: ISelectProps) => {
                 : placeholder || 'Select Values'}
             </span>
             <span>
-              <ChevroDownIcon />
+              <ChevroDownIcon fill={'#131316'} />
             </span>
           </div>
         </DropdownMenuTrigger>

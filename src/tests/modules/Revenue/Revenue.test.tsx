@@ -34,7 +34,7 @@ vi.mock('@/layout/SidebarLayout', () => ({
 }))
 
 vi.mock('@/lib/utils', async (importOriginal) => {
-  const original = await importOriginal()
+  const original = await importOriginal<typeof import('@/lib/utils')>()
   return {
     ...original,
     getObject: vi.fn((key, setter) => {

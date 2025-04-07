@@ -29,10 +29,11 @@ yarn install
 yarn dev
 ```
 
-### IDEAS
+### IDEAS - Approach
 1. Less package installation and Layout implementation to showcase component composition
 2. Use context as state management for small project
 3. Different tests composition based on module and components
+4. No loading state or skeleton
 
 ## Testing
 

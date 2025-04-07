@@ -8,20 +8,77 @@ vi.mock('@/components/MultiSelect', () => ({
   ),
 }))
 
+interface FilterModalProps {
+  isOpen: boolean
+  handleClose: () => void
+  isApplyButtonEnabled: boolean
+  handleApplyFilters: () => void
+  handleClearFilters: () => void
+  handleFilterClick: (filter: string) => void
+  handleTransactionTypeChange: (e: string[]) => void
+  handleTransactionStatusChange: (e: string[]) => void
+  handleStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  filterState: {
+    transactionTypes: string[]
+    transactionStatus: string[]
+    startDate: string
+    endDate: string
+    selectedFilter: string | null
+  }
+}
+
 describe('FilterModal', () => {
   let mockHandleClose: VoidFunction
+  let mockHandleApplyFilters: VoidFunction
+  let mockHandleClearFilters: VoidFunction
+  let mockHandleFilterClick: (filter: string) => void
+  let mockHandleTransactionTypeChange: (e: string[]) => void
+  let mockHandleTransactionStatusChange: (e: string[]) => void
+  let mockHandleStartDateChange: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  let mockHandleEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  let defaultProps: FilterModalProps
 
   beforeEach(() => {
     mockHandleClose = vi.fn()
+    mockHandleApplyFilters = vi.fn()
+    mockHandleClearFilters = vi.fn()
+    mockHandleFilterClick = vi.fn()
+    mockHandleTransactionTypeChange = vi.fn()
+    mockHandleTransactionStatusChange = vi.fn()
+    mockHandleStartDateChange = vi.fn()
+    mockHandleEndDateChange = vi.fn()
+
+    defaultProps = {
+      isOpen: true,
+      handleClose: mockHandleClose,
+      isApplyButtonEnabled: true,
+      handleApplyFilters: mockHandleApplyFilters,
+      handleClearFilters: mockHandleClearFilters,
+      handleFilterClick: mockHandleFilterClick,
+      handleTransactionTypeChange: mockHandleTransactionTypeChange,
+      handleTransactionStatusChange: mockHandleTransactionStatusChange,
+      handleStartDateChange: mockHandleStartDateChange,
+      handleEndDateChange: mockHandleEndDateChange,
+      filterState: {
+        transactionTypes: [],
+        transactionStatus: [],
+        startDate: '',
+        endDate: '',
+        selectedFilter: null,
+      },
+    }
   })
 
   it('renders when isOpen is true', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     expect(screen.getByText('Filter')).toBeInTheDocument()
   })
 
   it('is not visible when isOpen is false', () => {
-    render(<FilterModal isOpen={false} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} isOpen={false} />)
     expect(
       screen
         .queryByTestId('filter-modal')
@@ -29,14 +86,8 @@ describe('FilterModal', () => {
     ).toBe(true)
   })
 
-  // it('renders date range inputs', () => {
-  //   render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
-  //   const dateInputs = screen.getAllByRole('textbox')
-  //   expect(dateInputs).toHaveLength(2)
-  // })
-
   it('renders transaction type filter', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     expect(screen.getByText('Transaction Type')).toBeInTheDocument()
     expect(screen.getAllByTestId('multi-select')[0]).toHaveTextContent(
       'Filter by types'
@@ -44,7 +95,7 @@ describe('FilterModal', () => {
   })
 
   it('renders transaction status filter', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     expect(screen.getByText('Transaction Status')).toBeInTheDocument()
     expect(screen.getAllByTestId('multi-select')[1]).toHaveTextContent(
       'Filter by status'
@@ -52,7 +103,7 @@ describe('FilterModal', () => {
   })
 
   it('renders filter period options', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     expect(screen.getByText('Today')).toBeInTheDocument()
     expect(screen.getByText('Last 7 days')).toBeInTheDocument()
     expect(screen.getByText('This Month')).toBeInTheDocument()
@@ -60,28 +111,28 @@ describe('FilterModal', () => {
   })
 
   it('renders clear and apply buttons', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     expect(screen.getByText('Clear')).toBeInTheDocument()
     expect(screen.getByText('Apply')).toBeInTheDocument()
   })
 
   it('calls handleClose when clicking the close button', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     const closeButton = screen.getByTestId('close-btn')
     fireEvent.click(closeButton)
     expect(mockHandleClose).toHaveBeenCalledTimes(1)
   })
 
   it('calls handleClose when clicking the backdrop', () => {
-    render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
+    render(<FilterModal {...defaultProps} />)
     const backdrop = screen.getByTestId('backdrop')
     fireEvent.click(backdrop)
     expect(mockHandleClose).toHaveBeenCalledTimes(1)
   })
 
-  // it('applies button is disabled by default', () => {
-  //   render(<FilterModal isOpen={true} handleClose={mockHandleClose} />)
-  //   const applyButton = screen.getByText('Apply')
-  //   expect(applyButton).toBeDisabled()
-  // })
+  it('applies button is disabled by default', () => {
+    render(<FilterModal {...defaultProps} isApplyButtonEnabled={false} />)
+    const applyButton = screen.getByText('Apply')
+    expect(applyButton).toBeDisabled()
+  })
 })

@@ -28,18 +28,38 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <Nav user={user} />
       <div className="relative">
         {children}
-        <div className="fixed flex flex-col gap-y-7 top-[34%] left-[20px] px-3 py-4 shadow-xl rounded-full">
-          <div className="grayscale hover:grayscale-0 cursor-pointer">
-            <ProductIcon />
+        <div className="fixed flex flex-col gap-y-5 top-[34%] left-[20px] px-2 py-4 shadow-xl rounded-full">
+          <div className="grayscale hover:grayscale-0 cursor-pointer hover:rounded-full hover:bg-[#e9ecef] px-1 py-1">
+            <div className="relative group">
+              <ProductIcon />
+              <div className="absolute left-[45px] bottom-[-10px] w-[80px] transform  mb-2 hidden group-hover:block bg-[#131316] text-white text-sm rounded py-1 px-2 z-10">
+                Link in Bio
+              </div>
+            </div>
           </div>
-          <div className="grayscale hover:grayscale-0 cursor-pointer">
-            <VecIcon />
+          <div className="grayscale hover:grayscale-0 cursor-pointer hover:rounded-full hover:bg-[#e9ecef] px-1 py-1">
+            <div className="relative group">
+              <VecIcon />
+              <div className="absolute left-[45px] bottom-[-10px] w-[80px] transform  mb-2 hidden group-hover:block bg-[#131316] text-white text-sm rounded py-1 px-2 z-10">
+                Store
+              </div>
+            </div>
           </div>
-          <div className="grayscale hover:grayscale-0 cursor-pointer">
-            <FilesIcon />
+          <div className="grayscale hover:grayscale-0 cursor-pointer hover:rounded-full hover:bg-[#e9ecef] px-1 py-1">
+            <div className="relative group">
+              <FilesIcon />
+              <div className="absolute left-[45px] bottom-[-10px] w-[80px] transform  mb-2 hidden group-hover:block bg-[#131316] text-white text-sm rounded py-1 px-2 z-10">
+                Media Kit
+              </div>
+            </div>
           </div>
-          <div className="grayscale hover:grayscale-0 cursor-pointer">
-            <FoldIcon />
+          <div className="grayscale hover:grayscale-0 cursor-pointer hover:rounded-full hover:bg-[#e9ecef] px-1 py-1">
+            <div className="relative group">
+              <FoldIcon />
+              <div className="absolute left-[45px] bottom-[-10px] w-[80px] transform  mb-2 hidden group-hover:block bg-[#131316] text-white text-sm rounded py-1 px-2 z-10">
+                Invoicing
+              </div>
+            </div>
           </div>
         </div>
       </div>

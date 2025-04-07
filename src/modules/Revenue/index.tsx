@@ -26,7 +26,6 @@ const Revenue = () => {
     actions: { setWallet, setTransactions },
   } = useContext(StoreContext)
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
 
   useEffect(() => {
     getObject('wallet', (data) => setWallet(data as IWallet))
@@ -37,14 +36,6 @@ const Revenue = () => {
     setIsOpen(false)
   }
 
-  const handleFilterChange = (filter: string | null) => {
-    setSelectedFilter(filter)
-  }
-
-  const filteredTransaction = useMemo(
-    () => prepareFilterTransactions(transactions, selectedFilter),
-    [transactions, selectedFilter]
-  )
   const {
     isApplyButtonEnabled,
     handleApplyFilters,
@@ -54,9 +45,19 @@ const Revenue = () => {
     handleTransactionStatusChange,
     handleStartDateChange,
     handleEndDateChange,
-    startDate,
-    endDate,
-  } = useFilter(handleClose, handleFilterChange)
+    filters,
+    activeFiltersCount,
+  } = useFilter(handleClose)
+
+  const filteredTransaction = useMemo(
+    () =>
+      prepareFilterTransactions(
+        transactions,
+        filters.startDate,
+        filters.endDate
+      ),
+    [transactions, filters]
+  )
 
   const chartData = useMemo(() => {
     return prepareChartData(filteredTransaction) as IChartData[]
@@ -76,7 +77,7 @@ const Revenue = () => {
       <div className="mt-[140px] w-[80%] mx-auto relative">
         <section className="account flex w-full items-center gap-x-4 justify-between">
           <div className="available w-full">
-            <div className="flex w-full max-w-lg justify-between items-center mb-[32px]">
+            <div className="flex w-full max-w-md justify-between items-center mb-[32px]">
               <div>
                 <p className="text-[#56616B]">Available Balance</p>
                 <p className="font-bold text-[36px]">
@@ -134,7 +135,12 @@ const Revenue = () => {
                 onClick={() => setIsOpen(true)}
               >
                 <span data-testid="filter">Filter</span>
-                <ChevroDownIcon className="inline ml-2" />
+                {activeFiltersCount > 0 && (
+                  <span className="ml-1 bg-[#131316] text-white text-[12px] rounded-full w-4 h-4 flex items-center justify-center font-light">
+                    {activeFiltersCount}
+                  </span>
+                )}
+                <ChevroDownIcon className="inline ml-2" fill={'#131316'} />
               </Button>
               <Button variant="light" styles="font-semibold w-[130px]">
                 <span>Export list</span>
@@ -180,9 +186,7 @@ const Revenue = () => {
         handleTransactionStatusChange={handleTransactionStatusChange}
         handleStartDateChange={handleStartDateChange}
         handleEndDateChange={handleEndDateChange}
-        startDate={startDate}
-        endDate={endDate}
-        selectedFilter={selectedFilter}
+        filterState={filters}
       />
     </DashboardLayout>
   )
