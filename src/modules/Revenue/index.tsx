@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
 import Button from '@/components/Button'
+import ReceiptIcon from '@/assets/receipt.svg?react'
 import LineChart from '@/components/LineChart'
 import Table from '@/components/Table'
 import { StoreContext } from '@/StoreProvider'
@@ -16,6 +17,7 @@ import { IWallet, ITransaction, IChartData } from '@/types'
 import ChevroDownIcon from '@/assets/chevro-down.svg?react'
 import ExportIcon from '@/assets/export.svg?react'
 import InfoIcon from '@/assets/info.svg?react'
+import { useFilter } from './components/useFilter'
 
 const Revenue = () => {
   const {
@@ -43,6 +45,18 @@ const Revenue = () => {
     () => prepareFilterTransactions(transactions, selectedFilter),
     [transactions, selectedFilter]
   )
+  const {
+    isApplyButtonEnabled,
+    handleApplyFilters,
+    handleClearFilters,
+    handleFilterClick,
+    handleTransactionTypeChange,
+    handleTransactionStatusChange,
+    handleStartDateChange,
+    handleEndDateChange,
+    startDate,
+    endDate,
+  } = useFilter(handleClose, handleFilterChange)
 
   const chartData = useMemo(() => {
     return prepareChartData(filteredTransaction) as IChartData[]
@@ -128,14 +142,47 @@ const Revenue = () => {
               </Button>
             </div>
           </div>
-          <Table data-testid="transactions-table" data={filteredTransaction} />
+          {!!filteredTransaction.length && (
+            <Table
+              data-testid="transactions-table"
+              data={filteredTransaction}
+            />
+          )}
+          {!filteredTransaction.length && (
+            <div className="flex justify-center mt-14">
+              <div className="max-w-md w-full">
+                <div className="icon bg-linear-[130deg] from-[#DBDEE6] from-[ 1.89%%] to-[#F6F7F9] to-[98.77%] rounded-xl h-[48px] w-[48px] bg-green-100 flex items-center justify-center mb-[31px]">
+                  <ReceiptIcon />
+                </div>
+                <h4 className="font-bold text-[24px] text-black mb-3">
+                  No matching transaction found for the selected filter
+                </h4>
+                <p className="font-normal text-[14px] text-[#56616B] mb-5">
+                  Change your filters to see more results, or add a new product.
+                </p>
+                <Button variant="light" onClick={handleClearFilters}>
+                  Clear Filter
+                </Button>
+              </div>
+            </div>
+          )}
         </section>
       </div>
       {/* Modal */}
       <FilterModal
         isOpen={isOpen}
         handleClose={handleClose}
-        onFilterChange={handleFilterChange}
+        isApplyButtonEnabled={isApplyButtonEnabled}
+        handleApplyFilters={handleApplyFilters}
+        handleClearFilters={handleClearFilters}
+        handleFilterClick={handleFilterClick}
+        handleTransactionTypeChange={handleTransactionTypeChange}
+        handleTransactionStatusChange={handleTransactionStatusChange}
+        handleStartDateChange={handleStartDateChange}
+        handleEndDateChange={handleEndDateChange}
+        startDate={startDate}
+        endDate={endDate}
+        selectedFilter={selectedFilter}
       />
     </DashboardLayout>
   )

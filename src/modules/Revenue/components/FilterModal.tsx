@@ -1,5 +1,3 @@
-import { useState, useCallback } from 'react'
-
 import Button from '@/components/Button'
 import MultiSelect from '@/components/MultiSelect'
 import { cn } from '@/lib/utils'
@@ -8,6 +6,17 @@ interface FilterModalProps {
   isOpen: boolean
   handleClose: () => void
   onFilterChange?: (filter: string | null) => void
+  isApplyButtonEnabled: boolean
+  handleApplyFilters: () => void
+  handleClearFilters: () => void
+  handleFilterClick: (filter: string) => void
+  handleTransactionTypeChange: (e: string[]) => void
+  handleTransactionStatusChange: (e: string[]) => void
+  handleStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  startDate: string
+  endDate: string
+  selectedFilter: string | null
 }
 
 const filters = [
@@ -62,86 +71,18 @@ const transactionStatus = [
 const FilterModal = ({
   isOpen,
   handleClose,
-  onFilterChange,
+  isApplyButtonEnabled,
+  handleApplyFilters,
+  handleClearFilters,
+  handleFilterClick,
+  handleTransactionTypeChange,
+  handleTransactionStatusChange,
+  handleStartDateChange,
+  handleEndDateChange,
+  startDate,
+  endDate,
+  selectedFilter,
 }: FilterModalProps) => {
-  const [selectedTransactionTypes, setSelectedTransactionTypes] = useState<
-    string[]
-  >([])
-  const [selectedTransactionStatus, setSelectedTransactionStatus] = useState<
-    string[]
-  >([])
-  const [startDate, setStartDate] = useState<string>('')
-  const [endDate, setEndDate] = useState<string>('')
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null)
-
-  const handleTransactionTypeChange = useCallback((selectedItems: string[]) => {
-    setSelectedTransactionTypes(selectedItems)
-  }, [])
-
-  const handleTransactionStatusChange = useCallback(
-    (selectedItems: string[]) => {
-      setSelectedTransactionStatus(selectedItems)
-    },
-    []
-  )
-
-  const handleStartDateChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setStartDate(e.target.value)
-    },
-    []
-  )
-
-  const handleEndDateChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEndDate(e.target.value)
-    },
-    []
-  )
-
-  const handleFilterClick = useCallback(
-    (filterValue: string) => {
-      const newFilter = selectedFilter === filterValue ? null : filterValue
-      setSelectedFilter(newFilter)
-    },
-    [selectedFilter]
-  )
-
-  const handleClearFilters = useCallback(() => {
-    setSelectedTransactionTypes([])
-    setSelectedTransactionStatus([])
-    setStartDate('')
-    setEndDate('')
-    setSelectedFilter(null)
-    onFilterChange?.(null)
-  }, [onFilterChange])
-
-  const handleApplyFilters = useCallback(() => {
-    console.log('Applying filters:', {
-      transactionTypes: selectedTransactionTypes,
-      transactionStatus: selectedTransactionStatus,
-      dateRange: { startDate, endDate },
-      selectedFilter,
-    })
-    onFilterChange?.(selectedFilter)
-    handleClose()
-  }, [
-    selectedTransactionTypes,
-    selectedTransactionStatus,
-    startDate,
-    endDate,
-    selectedFilter,
-    handleClose,
-    onFilterChange,
-  ])
-
-  // Determine if the Apply button should be enabled
-  const isApplyButtonEnabled =
-    selectedTransactionTypes.length > 0 ||
-    selectedTransactionStatus.length > 0 ||
-    (startDate && endDate) ||
-    selectedFilter !== null
-
   return (
     <>
       <div

@@ -49,9 +49,9 @@ const CustomLineTick = ({
     <text
       {...props}
       y={props.y + 12}
-      textAnchor={isFirst ? 'start' : isLast ? 'end' : 'middle'}
-      fontSize={14}
       fill="#5E6C84"
+      fontSize={14}
+      textAnchor={isFirst ? 'start' : isLast ? 'end' : 'middle'}
     >
       {payload.value}
     </text>

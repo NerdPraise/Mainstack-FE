@@ -49,7 +49,7 @@ const menuItems = [
   { name: 'Sign Out', path: '/signout', icon: <SignOutIcon /> },
 ]
 
-const Nav = ({ user }: { user: IUser }) => {
+const Nav = ({ user }: { user: IUser | null }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const location = useLocation()
 

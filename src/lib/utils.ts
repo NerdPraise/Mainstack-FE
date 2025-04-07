@@ -39,10 +39,10 @@ export const prepareFilterTransactions = (
     return []
   }
 
-  let filteredTransactions = transactions
-  const sortedTransactions = [...filteredTransactions].sort(
+  const sortedTransactions = [...transactions].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   )
+  let filteredTransactions = sortedTransactions
 
   if (filter) {
     const now = new Date()
@@ -93,19 +93,15 @@ export const prepareChartData = (transactions: ITransaction[]) => {
     const date = new Date(transaction.date)
     const dateKey = formatDate(date.toISOString())
 
-    if (!acc[dateKey]) {
-      acc[dateKey] = {
-        name: formatDate(transaction.date),
-        uv: dateKey,
-        pv: 0,
-        amt: 0,
-      }
-    }
-
-    acc[dateKey].pv += transaction.amount
+    acc.push({
+      name: formatDate(transaction.date),
+      uv: dateKey,
+      pv: transaction.amount,
+      amt: 0,
+    })
 
     return acc
-  }, {} as Record<string, IChartData>)
+  }, [] as IChartData[])
   if (!Object.values(groupedByDate).length) {
     // Demo data for flatlining if data doesn't exist
     return [

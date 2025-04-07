@@ -25,7 +25,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'bg-black cursor-pointer duration-700 text-white py-4 rounded-full h-[52px] w-[168px]',
+        'bg-black cursor-pointer duration-700 text-white py-4 flex items-center justify-center rounded-full h-[52px] w-[168px]',
         variantClass[variant],
         styles,
         disabled &&
